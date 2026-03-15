@@ -179,9 +179,58 @@
         .about-feature:hover {
             background: #ecfdf5;
         }
+
+        /* Success Toast */
+        #successToast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            z-index: 9999;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+        }
+        #successToast.show {
+            transform: translateX(-50%) translateY(0px);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Submit button loading */
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            animation: spin 0.8s linear infinite;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
+
+    <!-- Success Toast -->
+    <div id="successToast">
+        <div class="bg-white rounded-2xl shadow-2xl border border-emerald-100 px-6 py-5 flex items-center gap-4" style="box-shadow:0 20px 60px rgba(0,0,0,0.15)">
+            <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            <div>
+                <p class="font-bold text-gray-900 text-base" id="toastTitle">Заявку відправлено!</p>
+                <p class="text-gray-500 text-sm mt-0.5" id="toastSub">Ми зв'яжемося з вами найближчим часом 👋</p>
+            </div>
+            <button onclick="hideToast()" class="ml-2 w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center flex-shrink-0 transition">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    </div>
 
     <!-- Top Bar -->
     <div class="bg-emerald-700 text-white py-2 text-sm hidden md:block">
@@ -359,7 +408,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%90%D0%BB%D1%8E%D0%BC%D0%B8%D0%BD%D0%B8%D0%B9.jfif" alt="Алюміній" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%90%D0%BB%D1%8E%D0%BC%D0%B8%D0%BD%D0%B8%D0%B9.svg" alt="Алюміній"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Алюміній" data-ru="Алюминий">Алюміній</h3>
                                 <div class="text-emerald-600 font-bold text-sm" data-uk="Від 70 грн До 100 грн" data-ru="От 70 грн До 100 грн">Від 70 грн До 100 грн</div>
@@ -383,7 +432,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%9B%D0%B0%D1%82%D1%83%D0%BD%D1%8C.jfif" alt="Латунь" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9B%D0%B0%D1%82%D1%83%D0%BD%D1%8C.svg" alt="Латунь"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Латунь" data-ru="Латунь">Латунь</h3>
                                 <div class="text-emerald-600 font-bold text-sm" data-uk="Від 230 грн До 260 грн" data-ru="От 230 грн До 260 грн">Від 230 грн До 260 грн</div>
@@ -405,7 +454,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%9D%D0%B5%D1%80%D0%B6%D0%B0%D0%B2%D0%B5%D0%B9%D0%BA%D0%B0.jfif" alt="Нержавіюча сталь" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9D%D0%B5%D1%80%D0%B6%D0%B0%D0%B2%D0%B5%D1%8E%D1%89%D0%B0%D1%8F%20%D1%81%D1%82%D0%B0%D0%BB%D1%8C.svg" alt="Нержавіюча сталь" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Нержавіюча сталь" data-ru="Нержавеющая сталь">Нержавіюча сталь</h3>
                                 <div class="text-emerald-600 font-bold text-sm" data-uk="Від 20 грн До 30 грн" data-ru="От 20 грн До 30 грн">Від 20 грн До 30 грн</div>
@@ -426,7 +475,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%9A%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D0%BE%D0%B2%D0%B8%D0%B9%20%D0%BC%D0%B5%D1%82%D0%B0%D0%BB.jfif" alt="Кольоровий метал" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%A6%D0%B2%D0%B5%D1%82%D0%BD%D0%BE%D0%B9%20%D0%BC%D0%B5%D1%82%D0%B0%D0%BB%D0%BB.svg" alt="Кольоровий метал"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Кольоровий метал" data-ru="Цветной металл">Кольоровий метал</h3>
                                 <div class="text-emerald-600 font-bold text-sm" data-uk="Безкоштовна доставка від 500 кг" data-ru="Бесплатная доставка от 500 кг">Безкоштовна доставка від 500 кг</div>
@@ -449,7 +498,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%90%D0%BA%D1%83%D0%BC%D1%96.jfif" alt="Акумулятори" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%90%D0%BA%D0%BA%D0%B0%D0%BC%D1%83%D0%BB%D1%8F%D1%82%D0%BE%D1%80%D1%8B.svg" alt="Акумулятори"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Акумулятори" data-ru="Аккумуляторы">Акумулятори</h3>
                                 <div class="text-emerald-600 font-bold text-sm" data-uk="Від 17 грн До 23 грн" data-ru="От 17 грн До 23 грн">Від 17 грн До 23 грн</div>
@@ -481,7 +530,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BC%D0%B0%D0%BA%D0%B0%D0%BB%D0%B0%D1%82%D1%83%D1%80%D0%B0.jfif" alt="Макулатура" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9C%D0%B0%D0%BA%D0%B0%D0%BB%D0%B0%D1%82%D1%83%D1%80%D0%B0.svg" alt="Макулатура"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Макулатура" data-ru="Макулатура">Макулатура</h3>
                                 <div class="text-amber-600 font-bold text-sm" data-uk="Від 5 грн До 6 грн" data-ru="От 5 грн До 6 грн">Від 5 грн До 6 грн</div>
@@ -502,7 +551,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BE%D1%8D%D0%BB%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%BD.jfif" alt="Поліетилен" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9F%D0%BE%D0%BB%D0%B8%D1%8D%D0%BB%D0%B5%D1%82%D0%B5%D0%BD.svg" alt="Поліетилен"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Поліетилен" data-ru="Полиэтилен">Поліетилен</h3>
                                 <div class="text-blue-600 font-bold text-sm" data-uk="Від 3 грн До 20 грн" data-ru="От 3 грн До 20 грн">Від 3 грн До 20 грн</div>
@@ -524,7 +573,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.jfif" alt="Біг Беги" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%91%D0%B8%D0%B3%D0%91%D0%B5%D0%B3%D0%B8.svg" alt="Біг Беги"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Біг Беги" data-ru="Биг Беги">Біг Беги</h3>
                                 <div class="text-indigo-600 font-bold text-sm" data-uk="Від 5 грн До 10 грн" data-ru="От 5 грн До 10 грн">Від 5 грн До 10 грн</div>
@@ -535,8 +584,8 @@
                             <li class="flex items-start gap-2"><span class="text-gray-400">•</span><span data-uk="Рваний — 5-10 грн/кг" data-ru="Рваный — 5-10 грн/кг">Рваний — 5-10 грн/кг</span></li>
                         </ul>
                     </div>
-                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-gray-900">
-                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.jfif" alt="Біг Беги" class="w-full h-full object-cover">
+                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-white">
+                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/main/%D0%91%D0%98%D0%93%D0%91%D0%95%D0%93%D0%98%D0%98%D0%98.png" alt="Біг Беги" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -544,7 +593,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D1%81%D1%81%D1%82%D0%B5%D0%BA%D0%BB%D0%BE.jfif" alt="Скло" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%A1%D1%82%D0%B5%D0%BA%D0%BB%D0%BE.svg" alt="Скло"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Скло" data-ru="Стекло">Скло</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
@@ -560,7 +609,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D1%81%D1%82%D0%B5%D0%BA%D0%BB%D0%BE%D1%82%D0%B0%D1%80%D0%B0.jfif" alt="Склотара" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%A1%D1%82%D0%B5%D0%BA%D0%BB%D0%BE%D1%82%D0%B0%D1%80%D0%B0.svg" alt="Склотара"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Склотара" data-ru="Стеклотара">Склотара</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
@@ -576,7 +625,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.jfif" alt="Пластик" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9F%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.svg" alt="Пластик"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Пластик" data-ru="Пластик">Пластик</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
@@ -592,15 +641,15 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%B1%D1%83%D1%82%D1%8B%D0%BB%D0%BA%D0%B8.jfif" alt="ПЕТ пляшки" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9F%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.svg" alt="ПЕТ пляшки" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="ПЕТ пляшки" data-ru="ПЭТ бутылки">ПЕТ пляшки</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-gray-900">
-                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%B1%D1%83%D1%82%D1%8B%D0%BB%D0%BA%D0%B8.jfif" alt="ПЕТ бутылки" class="w-full h-full object-contain">
+                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-white">
+                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/main/%D0%9F%D0%AD%D0%A2%D0%91%D0%A3%D0%A2%D0%AB%D0%9B%D0%9A%D0%98.png" alt="ПЕТ бутылки" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -608,7 +657,7 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%B1%D1%83%D1%82%D1%8B%D0%BB%D0%BA%D0%B8.jfif" alt="Пластикові пляшки" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9F%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.svg" alt="Пластикові пляшки" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Пластикові пляшки" data-ru="Пластиковые бутылки">Пластикові пляшки</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
@@ -624,15 +673,15 @@
                 <div class="card-hover bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex gap-4 opacity-60">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-3 mb-2">
-                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.jfif" alt="Пластикові кришки" class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
+                            <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/ad3553cc502f31c804ad1ed3cb3e5697313bcd6a/%D0%9F%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%BA%D1%80%D1%8B%D1%88%D0%BA%D0%B8.svg" alt="Пластикові кришки"class="w-9 h-9 object-contain" style="width:48px;height:48px;flex-shrink:0">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900" data-uk="Пластикові кришки" data-ru="Пластиковые крышки">Пластикові кришки</h3>
                                 <span class="inline-block bg-red-100 text-red-600 font-semibold px-3 py-0.5 rounded-full text-xs mt-1" data-uk="Тимчасово не приймаємо" data-ru="Временно не принимаем">Тимчасово не приймаємо</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-gray-900">
-                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/refs/heads/main/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA.jfif" alt="Кришки" class="w-full h-full object-cover">
+                    <div class="flex-shrink-0 w-36 h-36 rounded-xl overflow-hidden self-center bg-white">
+                        <img src="https://raw.githubusercontent.com/back0x0-cell/my-cafe/main/%D0%9A%D0%A0%D0%AB%D0%A8%D0%9A%D0%98%20%D0%9F%D0%9B%D0%90%D0%A2%D0%98%D0%A1%D0%9A%D0%9E%D0%92%D0%AB%D0%95.png" alt="Кришки" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -992,7 +1041,7 @@
 
             <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-10" data-uk="Заповніть форму та дізнайтесь свою ціну прямо зараз" data-ru="Заполните форму и узнайте свою цену прямо сейчас">Заповніть форму та дізнайтесь свою ціну прямо зараз</h2>
 
-            <form id="contactForm" action="https://formsubmit.co/nonopa22266@gmail.com" method="POST">
+            <form id="contactForm" action="https://formsubmit.co/ajax/nonopa22266@gmail.com" method="POST">
                 <input type="hidden" name="_subject" value="Нова заявка з сайту ВторМеталл">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="box">
@@ -1090,10 +1139,16 @@
                             <input type="text" name="name" placeholder="" data-placeholder-uk="Введіть ваше ім'я" data-placeholder-ru="Введите ваше имя"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:border-emerald-500 focus:outline-none transition placeholder:text-gray-400 bg-white">
                         </div>
-                        <button type="submit"
+                        <button type="submit" id="submitBtn"
                             class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg text-base transition flex items-center justify-center gap-2 mt-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span data-uk="Відправити" data-ru="Отправить">Відправити</span>
+                            <span id="submitBtnContent" class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span data-uk="Відправити" data-ru="Отправить">Відправити</span>
+                            </span>
+                            <span id="submitBtnLoading" class="hidden flex items-center gap-2">
+                                <svg class="w-4 h-4 spinner" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                <span data-uk="Відправляємо..." data-ru="Отправляем...">Відправляємо...</span>
+                            </span>
                         </button>
                     </div>
 
@@ -1488,12 +1543,75 @@
             document.getElementById('articlesOverlay').classList.add('hidden');
             document.body.style.overflow = '';
         }
-        // Check for form success
+        // Check for form success (fallback for non-JS)
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('success')) {
             document.getElementById('contactForm').classList.add('hidden');
             document.getElementById('successMessage').classList.remove('hidden');
         }
+
+        // ===== TOAST SYSTEM =====
+        let toastTimer = null;
+        function showToast(title, sub) {
+            const toast = document.getElementById('successToast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastSub').textContent = sub;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(hideToast, 5000);
+        }
+        function hideToast() {
+            document.getElementById('successToast').classList.remove('show');
+        }
+
+        // ===== AJAX FORM SUBMIT =====
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const btnContent = document.getElementById('submitBtnContent');
+            const btnLoading = document.getElementById('submitBtnLoading');
+
+            // Show loading state
+            btn.classList.add('btn-loading');
+            btnContent.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+
+            try {
+                const formData = new FormData(this);
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Success — reset form, show toast
+                    this.reset();
+                    const isUk = currentLang === 'uk';
+                    showToast(
+                        isUk ? '✅ Заявку відправлено!' : '✅ Заявка отправлена!',
+                        isUk ? 'Ми зв\'яжемося з вами найближчим часом 👋' : 'Мы свяжемся с вами в ближайшее время 👋'
+                    );
+                    // Also scroll to show success message inline
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    document.getElementById('contactForm').classList.add('hidden');
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (err) {
+                const isUk = currentLang === 'uk';
+                showToast(
+                    isUk ? '⚠️ Щось пішло не так' : '⚠️ Что-то пошло не так',
+                    isUk ? 'Спробуйте ще раз або зателефонуйте нам' : 'Попробуйте ещё раз или позвоните нам'
+                );
+            } finally {
+                // Restore button
+                btn.classList.remove('btn-loading');
+                btnContent.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
